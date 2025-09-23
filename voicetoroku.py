@@ -9,6 +9,22 @@ from st_audiorec import st_audiorec
 
 load_dotenv()
 API_KEY = os.getenv("OPENAI_API_KEY")
+
+st.sidebar.header("APIキー設定")
+
+if "api_key" not in st.session_state:
+    st.session_state.api_key = os.getenv("OPENAI_API_KEY") or ""
+
+user_api_key = st.sidebar.text_input(
+    "OpenAI APIキーを入力してください",
+    type="password",
+)
+
+if user_api_key:
+    st.session_state.api_key = user_api_key
+
+API_KEY = st.session_state.api_key
+
 if not API_KEY:
     st.error(" OpenAI APIキーが見つかりません。.env を確認してください")
     st.stop()
